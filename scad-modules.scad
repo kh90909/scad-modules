@@ -35,6 +35,18 @@ module tz(z) {
 	translate([0,0,z]) children();
 }
 
+module rx(x) {
+	rotate([x,0,0]) children();
+}
+
+module ry(y) {
+	rotate([0,y,0]) children();
+}
+
+module rz(z) {
+	rotate([0,0,z]) children();
+}
+
 module half_cyl(r,h) {
 	intersection() {
 		cylinder(r=r,h=h);
@@ -142,4 +154,16 @@ module d_cyl(r,h,c=false,f=[0,0]) {
 	translate([0,0,orig_z-hn])
 		cylinder(r=r,h=dh);
 }
-			
+
+module box(w,d,h,t,c=[false,false,false]) {
+    orig_x=c[0] ? -w/2 : 0;
+	orig_y=c[1] ? -d/2 : 0;
+	orig_z=c[2] ? -h/2 : 0;
+
+	translate([orig_x,orig_y,orig_z])
+        difference() {
+            cube([w,d,h]);
+            translate([t,t,t])
+                cube([w-2*t,d-2*t,h-2*t]);
+        }
+}
